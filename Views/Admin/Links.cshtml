@@ -1,0 +1,115 @@
+@model List<Distributed_URL_Shortener_with_Analytics.Models.ShortLink>
+@{
+    ViewData["Title"] = "Links Management";
+    ViewBag.IsAdmin = true;
+    var baseUrl = ViewBag.BaseUrl as string ?? "";
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="card mb-4">
+            <div class="card-body">
+                <h2 class="card-title"><i class="bi bi-link-45deg"></i> Links Management</h2>
+                <p class="text-muted">View and manage all shortened links</p>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Short Code</th>
+                        <th>Original URL</th>
+                        <th>User</th>
+                        <th>Clicks</th>
+                        <th>Created</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var link in Model)
+                    {
+                        <tr>
+                            <td>@link.Id</td>
+                            <td>
+                                <a href="@baseUrl/r/@link.ShortCode" target="_blank" class="text-decoration-none">
+                                    @link.ShortCode
+                                </a>
+                            </td>
+                            <td>
+                                <a href="@link.OriginalUrl" target="_blank" class="text-decoration-none">
+                                    @(link.OriginalUrl.Length > 50 ? link.OriginalUrl.Substring(0, 50) + "..." : link.OriginalUrl)
+                                </a>
+                            </td>
+                            <td>
+                                @if (link.User != null)
+                                {
+                                    <span>@link.User.Username</span>
+                                    @if (link.User.IsAdmin)
+                                    {
+                                        <span class="badge bg-danger ms-1">Admin</span>
+                                    }
+                                }
+                                else
+                                {
+                                    <span class="text-muted">Anonymous</span>
+                                }
+                            </td>
+                            <td>
+                                @if (link.HasAnalytics)
+                                {
+                                    <span class="badge bg-primary">@link.ClickAnalytics.Count</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary">N/A</span>
+                                }
+                            </td>
+                            <td>@link.CreatedAt.ToString("yyyy-MM-dd HH:mm")</td>
+                            <td>
+                                @if (link.IsActive)
+                                {
+                                    <span class="badge bg-success">Active</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary">Inactive</span>
+                                }
+                            </td>
+                            <td>
+                                <button class="btn btn-sm btn-danger" onclick="deleteLink(@link.Id)">
+                                    <i class="bi bi-trash"></i> Delete
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function deleteLink(linkId) {
+            if (!confirm('Are you sure you want to delete this link?')) {
+                return;
+            }
+            
+            fetch(`/admin/links/${linkId}/delete`, {
+                method: 'POST'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    location.reload();
+                } else {
+                    alert('Failed to delete link: ' + (data.error || 'Unknown error'));
+                }
+            });
+        }
+    </script>
+}
+

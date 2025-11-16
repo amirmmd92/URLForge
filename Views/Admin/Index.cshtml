@@ -1,0 +1,76 @@
+@model Distributed_URL_Shortener_with_Analytics.Controllers.AdminStatsViewModel
+@{
+    ViewData["Title"] = "Admin Dashboard";
+    ViewBag.IsAdmin = true;
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="card mb-4">
+            <div class="card-body">
+                <h2 class="card-title"><i class="bi bi-shield-check"></i> Admin Dashboard</h2>
+                <p class="text-muted">System overview and statistics</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h3 class="text-primary">@Model.TotalUsers</h3>
+                        <p class="text-muted mb-0">Total Users</p>
+                        <a href="/admin/users" class="btn btn-sm btn-outline-primary mt-2">Manage</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h3 class="text-success">@Model.TotalLinks</h3>
+                        <p class="text-muted mb-0">Total Links</p>
+                        <a href="/admin/links" class="btn btn-sm btn-outline-success mt-2">Manage</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h3 class="text-info">@Model.TotalClicks</h3>
+                        <p class="text-muted mb-0">Total Clicks</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h3 class="text-warning">@Model.ActiveLinks</h3>
+                        <p class="text-muted mb-0">Active Links</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h3 class="text-danger">@Model.LinksWithAnalytics</h3>
+                        <p class="text-muted mb-0">Links with Analytics</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Quick Actions</h5>
+                <div class="d-grid gap-2 d-md-block">
+                    <a href="/admin/users" class="btn btn-primary">
+                        <i class="bi bi-people"></i> Manage Users
+                    </a>
+                    <a href="/admin/links" class="btn btn-success">
+                        <i class="bi bi-link-45deg"></i> Manage Links
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

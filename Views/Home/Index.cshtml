@@ -1,0 +1,125 @@
+@{
+    ViewData["Title"] = "URL Shortener";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-body p-5">
+                <h1 class="card-title text-center mb-4">
+                    <i class="bi bi-link-45deg"></i> Shorten Your URL
+                </h1>
+                <p class="text-center text-muted mb-4">
+                    Create short links and track analytics. Login to access advanced features.
+                </p>
+
+                <form id="shortenForm">
+                    <div class="mb-3">
+                        <label for="originalUrl" class="form-label">Enter URL to shorten</label>
+                        <input type="url" class="form-control form-control-lg" id="originalUrl" 
+                               placeholder="https://example.com" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="customCode" class="form-label">Custom Code (Optional)</label>
+                        <input type="text" class="form-control" id="customCode" 
+                               placeholder="my-custom-link" pattern="[a-zA-Z0-9_-]+">
+                        <small class="form-text text-muted">Only letters, numbers, dash, and underscore allowed</small>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-lg w-100">
+                        <i class="bi bi-scissors"></i> Shorten URL
+                    </button>
+                </form>
+
+                <div id="result" class="mt-4" style="display: none;">
+                    <div class="alert alert-success">
+                        <h5><i class="bi bi-check-circle"></i> Success!</h5>
+                        <p class="mb-2">Your short URL:</p>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="shortUrlResult" readonly>
+                            <button class="btn btn-outline-secondary" type="button" onclick="copyToClipboard()">
+                                <i class="bi bi-clipboard"></i> Copy
+                            </button>
+                        </div>
+                        <div id="analyticsInfo" class="mt-2"></div>
+                    </div>
+                </div>
+
+                <div id="error" class="mt-4" style="display: none;">
+                    <div class="alert alert-danger">
+                        <i class="bi bi-exclamation-triangle"></i> <span id="errorMessage"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-body">
+                <h5 class="card-title"><i class="bi bi-info-circle"></i> Features</h5>
+                <ul class="list-unstyled">
+                    <li><i class="bi bi-check-circle text-success"></i> Free URL shortening</li>
+                    <li><i class="bi bi-check-circle text-success"></i> Custom short codes</li>
+                    <li><i class="bi bi-check-circle text-success"></i> Analytics for logged-in users</li>
+                    <li><i class="bi bi-check-circle text-success"></i> RESTful API access</li>
+                    <li><i class="bi bi-check-circle text-success"></i> Secure and fast</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.getElementById('shortenForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const originalUrl = document.getElementById('originalUrl').value;
+            const customCode = document.getElementById('customCode').value;
+            const resultDiv = document.getElementById('result');
+            const errorDiv = document.getElementById('error');
+            
+            // Hide previous results
+            resultDiv.style.display = 'none';
+            errorDiv.style.display = 'none';
+            
+            try {
+                const response = await fetch('/Home/CreateShortLink', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: new URLSearchParams({
+                        originalUrl: originalUrl,
+                        customCode: customCode || ''
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    document.getElementById('shortUrlResult').value = data.shortUrl;
+                    const analyticsInfo = document.getElementById('analyticsInfo');
+                    if (data.hasAnalytics) {
+                        analyticsInfo.innerHTML = '<small class="text-muted"><i class="bi bi-graph-up"></i> Analytics available in your dashboard</small>';
+                    } else {
+                        analyticsInfo.innerHTML = '<small class="text-muted"><i class="bi bi-info-circle"></i> Login to enable analytics</small>';
+                    }
+                    resultDiv.style.display = 'block';
+                } else {
+                    document.getElementById('errorMessage').textContent = data.message || 'Failed to create short link';
+                    errorDiv.style.display = 'block';
+                }
+            } catch (error) {
+                document.getElementById('errorMessage').textContent = 'An error occurred. Please try again.';
+                errorDiv.style.display = 'block';
+            }
+        });
+        
+        function copyToClipboard() {
+            const input = document.getElementById('shortUrlResult');
+            input.select();
+            document.execCommand('copy');
+            alert('Copied to clipboard!');
+        }
+    </script>
+}
+

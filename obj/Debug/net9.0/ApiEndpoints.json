@@ -1,0 +1,60 @@
+[
+  {
+    "ContainingType": "Distributed_URL_Shortener_with_Analytics.Controllers.ApiController",
+    "Method": "GetAnalytics",
+    "RelativePath": "api/Api/analytics/{linkId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "linkId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Distributed_URL_Shortener_with_Analytics.Controllers.ApiController",
+    "Method": "GetLinks",
+    "RelativePath": "api/Api/links",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Distributed_URL_Shortener_with_Analytics.Controllers.ApiController",
+    "Method": "DeleteLink",
+    "RelativePath": "api/Api/links/{linkId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "linkId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Distributed_URL_Shortener_with_Analytics.Controllers.ApiController",
+    "Method": "Shorten",
+    "RelativePath": "api/Api/shorten",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "Distributed_URL_Shortener_with_Analytics.Controllers.ShortenRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]

@@ -1,0 +1,124 @@
+@model Distributed_URL_Shortener_with_Analytics.Services.AnalyticsViewModel
+@{
+    ViewData["Title"] = "Analytics";
+    var baseUrl = ViewBag.BaseUrl as string ?? "";
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="card mb-4">
+            <div class="card-body">
+                <h2 class="card-title"><i class="bi bi-graph-up"></i> Link Analytics</h2>
+                <p class="text-muted mb-0">
+                    <strong>Short URL:</strong> <a href="@baseUrl/r/@Model.ShortCode" target="_blank">@baseUrl/r/@Model.ShortCode</a><br>
+                    <strong>Original URL:</strong> <a href="@Model.OriginalUrl" target="_blank">@Model.OriginalUrl</a>
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3 mb-4">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h3 class="text-primary">@Model.TotalClicks</h3>
+                        <p class="text-muted mb-0">Total Clicks</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h3 class="text-success">@Model.UniqueClicks</h3>
+                        <p class="text-muted mb-0">Unique Clicks</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h3 class="text-info">@Model.ClicksByCountry.Count</h3>
+                        <p class="text-muted mb-0">Countries</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h3 class="text-warning">@Model.RecentClicks.Count</h3>
+                        <p class="text-muted mb-0">Recent Clicks</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @if (Model.ClicksByCountry.Any())
+        {
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="bi bi-globe"></i> Clicks by Country</h5>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Country</th>
+                                    <th>Clicks</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var country in Model.ClicksByCountry)
+                                {
+                                    <tr>
+                                        <td>@country.Country</td>
+                                        <td><span class="badge bg-primary">@country.Count</span></td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        }
+
+        @if (Model.RecentClicks.Any())
+        {
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="bi bi-clock-history"></i> Recent Clicks</h5>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Time</th>
+                                    <th>IP Address</th>
+                                    <th>User Agent</th>
+                                    <th>Referer</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var click in Model.RecentClicks)
+                                {
+                                    <tr>
+                                        <td>@click.ClickedAt.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                                        <td>@(click.IpAddress ?? "N/A")</td>
+                                        <td>@(click.UserAgent?.Length > 50 ? click.UserAgent.Substring(0, 50) + "..." : click.UserAgent ?? "N/A")</td>
+                                        <td>@(click.Referer ?? "Direct")</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="card">
+                <div class="card-body text-center py-5">
+                    <i class="bi bi-graph-down" style="font-size: 3rem; color: #ccc;"></i>
+                    <p class="text-muted mt-3">No clicks recorded yet</p>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
