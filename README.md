@@ -4,40 +4,27 @@ A secure ASP.NET Core URL shortener application with analytics, API access, and 
 
 ## Screenshots
 
-<style>
-/* Container grid */
-.gallery {
+<div style="
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    grid-auto-rows: 150px;
-    gap: 5px; 
-}
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: auto;
+    gap: 6px;
+    max-width: 400px;
+    margin: 15px auto;
+">
+    <img src="screenshots/home.png" alt="Home Page" style="width:100%; height:90px; object-fit:cover; border-radius:6px; box-shadow:0 1px 3px rgba(0,0,0,0.15); transition: transform 0.3s;">
+    <img src="screenshots/admin.png" alt="Admin Panel" style="width:100%; height:110px; object-fit:cover; border-radius:6px; box-shadow:0 1px 3px rgba(0,0,0,0.15); transition: transform 0.3s;">
+    <img src="screenshots/analytics.png" alt="Analytics" style="width:100%; height:85px; object-fit:cover; border-radius:6px; box-shadow:0 1px 3px rgba(0,0,0,0.15); transition: transform 0.3s;">
+    <img src="screenshots/dashboard.png" alt="Dashboard" style="width:100%; height:90px; object-fit:cover; border-radius:6px; box-shadow:0 1px 3px rgba(0,0,0,0.15); transition: transform 0.3s; grid-column:1 / span 2;">
+    <img src="screenshots/api.png" alt="API Management" style="width:100%; height:90px; object-fit:cover; border-radius:6px; box-shadow:0 1px 3px rgba(0,0,0,0.15); transition: transform 0.3s; grid-column:3;">
+</div>
 
-
-.gallery img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; 
-       display: block;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    cursor: pointer;
-    border-radius: 8px; 
-}
-
-
-.gallery img:hover {
-    transform: scale(1.05); 
-    box-shadow: 0 8px 20px rgba(0,0,0,0.3); 
-}
+<style>
+    img:hover {
+        transform: scale(1.05);
+    }
 </style>
 
-<div class="gallery">
-    <img src="screenshots/home.png" alt="Home Page"/>
-    <img src="screenshots/admin.png" alt="Admin Panel"/>
-    <img src="screenshots/analytics.png" alt="Analytics"/>
-    <img src="screenshots/dashboard.png" alt="Dashboard"/>
-    <img src="screenshots/api.png" alt="API Management"/>
-</div>
 
 ## Features
 
