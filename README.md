@@ -4,12 +4,39 @@ A secure ASP.NET Core URL shortener application with analytics, API access, and 
 
 ## Screenshots
 
-<div style="display: flex; gap: 10px; flex-wrap: wrap;">
-    <img src="screenshots/home.png" alt="Home Page" width="200"/>
-    <img src="screenshots/admin.png" alt="Admin Panel" width="200"/>
-    <img src="screenshots/analytics.png" alt="Analytics" width="200"/>
-    <img src="screenshots/dashboard.png" alt="Dashboard" width="200"/>
-    <img src="screenshots/api.png" alt="API Management" width="200"/>
+<style>
+/* Container grid */
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-auto-rows: 150px;
+    gap: 5px; 
+}
+
+
+.gallery img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+       display: block;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    border-radius: 8px; 
+}
+
+
+.gallery img:hover {
+    transform: scale(1.05); 
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3); 
+}
+</style>
+
+<div class="gallery">
+    <img src="screenshots/home.png" alt="Home Page"/>
+    <img src="screenshots/admin.png" alt="Admin Panel"/>
+    <img src="screenshots/analytics.png" alt="Analytics"/>
+    <img src="screenshots/dashboard.png" alt="Dashboard"/>
+    <img src="screenshots/api.png" alt="API Management"/>
 </div>
 
 ## Features
